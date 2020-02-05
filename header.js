@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   header_text: {
     fontSize: 40,
     fontFamily: "FranklinGothic-Heavy",
-    marginTop: 15,
+    marginTop: 40,
     marginBottom: 15,
     color: "white"
   }
