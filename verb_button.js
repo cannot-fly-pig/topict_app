@@ -22,7 +22,7 @@ export default class VerbButton extends Component {
   render() {
     let chosen = this.props.chosen == this.props.id ? styles.chosen : null
     return(
-      <TouchableOpacity style={styles.buttonWrap} onPress={this.props.onPress}>
+      <TouchableOpacity style={styles.buttonWrap} onPressIn={this.props.onPressIn}>
         <Image style={[styles.verb_button,chosen]} source={this.props.source} />
       </TouchableOpacity>
     )
