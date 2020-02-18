@@ -6,16 +6,15 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  SafeAreaView
 } from 'react-native'
 
 import MyHeader from "./header.js"
 
 export default class ResultScreen extends Component{
   render(){
-    console.log("result")
-    console.log(this.props.route.params.result_source)
     return(
-      <View>
+      <SafeAreaView>
         <MyHeader />
         <View style={styles.container} >
           <Image 
@@ -23,7 +22,7 @@ export default class ResultScreen extends Component{
             source={{uri: this.props.route.params.result_source}}
         />
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 }

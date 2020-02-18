@@ -9,6 +9,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  SafeAreaView
 } from 'react-native'
 
 import MyHeader from "./header.js"
@@ -92,7 +93,7 @@ export default class MainScreen extends Component{
     const { navigation } = this.props
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <MyHeader />
         <View style={styles.textWrap}>
           <Text style={styles.mainText}>I wanna</Text>
@@ -135,7 +136,7 @@ export default class MainScreen extends Component{
             }}
           />
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 }
