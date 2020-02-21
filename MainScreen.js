@@ -27,6 +27,7 @@ export default class MainScreen extends Component{
 
   click_verb = (id) => {
     this.setState({verb: id})
+    console.log(this.props)
   }
 
   make_img = async (verb,word,WebViewRef) => {
@@ -119,7 +120,7 @@ export default class MainScreen extends Component{
             }
           />
           <TouchableOpacity onPress={() => {
-            this.make_img(this.state.verb, "https://2.bp.blogspot.com/-xobtX6vL4To/VVGVsyZRYTI/AAAAAAAAtoU/GR_M6qNBzkY/s800/medical_kojin_byouin.png",WebViewRef) 
+            this.make_img(this.state.verb, this.props.route.params.word_src,WebViewRef) 
             }
           }>
             <Text style={styles.editButton} >Edit!</Text>
