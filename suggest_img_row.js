@@ -13,7 +13,7 @@ export default class SuggestImageRow extends Component{
     return(
       <View style={styles.container}>
         {this.props.sources.map((item) => {
-          return <SuggestImage source={item.thumbnail} navigation={this.props.navigation} />
+          return <SuggestImage source={item.thumbnail} item = {item} word={this.props.word} navigation={this.props.navigation} />
         })}
       </View>
     )

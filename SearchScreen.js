@@ -62,13 +62,13 @@ export default class SearchScreen extends Component{
           <TextInput 
             style={styles.form}
             ref={e => input = e}
-            onChangeText={(text) => this.setState({kouho: this.search_word(text)})}
+            onChangeText={(text) => this.setState({kouho: this.search_word(text),word: text})}
           >
           </TextInput>
         </View>
         <ScrollView style={styles.suggest_wrap}>
-          {(this.state.kouho.slice(0,8)).map((item) => {
-            return <SuggestImageRow sources={item} navigation={navigation}/>
+          {(this.state.kouho.slice(0,10)).map((item) => {
+            return <SuggestImageRow sources={item} word={this.state.word} navigation={navigation}/>
           })}
         </ScrollView>
       </SafeAreaView>

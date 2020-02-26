@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import { WebView } from 'react-native-webview'
+import RNPickerSelect from 'react-native-picker-select'
+import * as RNFS from 'react-native-fs'
 import axios from "axios"
+import { Buffer } from 'buffer/'
 import {
   StyleSheet,
   View,
@@ -9,11 +12,16 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
+  Picker
 } from 'react-native'
 
 import MyHeader from "./header.js"
 import VerbButton from "./verb_button.js"
+import translate from "./translate.js"
+import getToken from "./token.js"
+import speech from "./speech.js"
+import init from "./canvas.js"
 
 export default class MainScreen extends Component{
   constructor() {
@@ -22,30 +30,25 @@ export default class MainScreen extends Component{
     this.state={
       verb: "buy",
       js: "",
+      lang: "en"
     }
   }
 
-  click_verb = (id) => {
+  click_verb = async (id) => {
     this.setState({verb: id})
     console.log(this.props)
   }
 
   make_img = async (verb,word,WebViewRef) => {
-    const canvas = require("./canvas.js")
     const res = await axios.get(word, { responseType: "arraybuffer" })
-    const word_src = `data:${res.headers["content-type"]};base64,${btoa(
-      new Uint8Array(res.data).reduce(
-        (data, byte) => data + String.fromCharCode(byte),
-        ""
-      )
-    )}`
-    const img_src = await canvas.init()
-    const verb_src = await img_src[verb]
+    const image = Buffer.from(res.data).toString('base64');
+    const word_src = `data:${res.headers['content-type'].toLowerCase()};base64,${image}`
+    const img_src = init()
+    const verb_src = img_src[verb]
     const js = ` 
       (function(){
 
         let canvas = document.createElement("canvas")
-        canvas.style.border = "thick solid #000000"
         canvas.height = 1000
         canvas.width = 1400
         let ctx = canvas.getContext("2d")
@@ -113,27 +116,57 @@ export default class MainScreen extends Component{
                 navigation.navigate("Search")
               }
             }
-            onChangeText={
-              () => {
-                alert("test")
-              }
-            }
+            value={this.props.route.params ? this.props.route.params.word : "画像を選んでください"}
           />
-          <TouchableOpacity onPress={() => {
-            this.make_img(this.state.verb, this.props.route.params.word_src,WebViewRef) 
+
+          <RNPickerSelect
+            onValueChange={(value) => this.setState({lang: value})}
+            style={styles}
+            value={this.state.lang}
+            items={[
+                { label: "英語", value: "en" },
+                { label: "中国語", value: "zh" },
+                { label: "韓国語", value: "ko" },
+                { label: "スペイン語", value: "es" },
+                { label: "フランス語", value: "fr" },
+                { label: "インドネシア語", value: "id" },
+                { label: "ベトナム語", value: "vi" },
+                { label: "タイ語", value: "th" },
+                { label: "ミャンマー語", value: "my" },
+            ]}
+          />
+
+          <TouchableOpacity onPress={async () => {
+            this.make_img(this.state.verb, this.props.route.params.word_src,WebViewRef)
             }
           }>
             <Text style={styles.editButton} >Edit!</Text>
           </TouchableOpacity>
         </View>
-        <View style={{disply: "none"}}>
+        <View>
           <WebView
             ref={WEBVIEW_REF => (WebViewRef = WEBVIEW_REF)}
             originWhitelist={['*']}
             injectedJavaScript={this.state.js}
-            onMessage={(event) => {
+            onMessage={async (event) => {
               const {data} = event.nativeEvent
-              navigation.push("Result",{result_source: data})
+              console.log(data)
+              const token = await getToken()
+              let verb_ja
+              if (this.state.verb == "buy") verb_ja = "が買いたいです"
+              else if (this.state.verb == "go") verb_ja = "に行きたいです"
+              else if (this.state.verb == "get") verb_ja = "が欲しいです"
+              else if (this.state.verb == "see") verb_ja = "が見たいです"
+              const text = `私は${this.props.route.params.word}${verb_ja}`
+              const translated = await translate(token,text,"ja",this.state.lang)
+              const res = await speech(token,translated.data[0],this.state.lang)
+              console.log(res)
+              let tmp = Buffer.from(res.data).toString('base64');
+              const speech_src = `data:${res.headers['content-type'].toLowerCase()};base64,${tmp}`
+              const path = `file://${RNFS.DocumentDirectoryPath}/speech.wav`;
+              await RNFS.writeFile(path, speech_src, 'base64')
+              console.log(speech_src)
+              navigation.push("Result",{result_source: data, translate: translated.data[0], path: path})
             }}
           />
         </View>
@@ -151,7 +184,7 @@ const styles = StyleSheet.create({
   mainText: {
     fontSize: 50,
     fontFamily: "FranklinGothic-Heavy",
-    marginTop: 75,
+    marginTop: 40,
     marginBottom: 20,
     color: "#474747",
   },
@@ -172,7 +205,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   input: {
-    marginTop: 80,
+    marginTop: 40,
     marginBottom: 40,
     height: 60,
     width: 180,
@@ -193,5 +226,18 @@ const styles = StyleSheet.create({
     borderColor: "orange",
     borderWidth: 3,
     borderRadius: 5,
-  }
+  },
+  picker: {
+    color: "#000000",
+    backgroundColor: "#ffffff",
+  },
+  inputIOS: {
+    color: "#000000",
+    backgroundColor: "#ffffff",
+    marginLeft: 90,
+    marginRight: 90,
+    marginBottom: 30,
+    height: 60,
+      
+  },
 });

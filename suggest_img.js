@@ -12,7 +12,7 @@ export default class SuggestImage extends Component{
   render(){
     return(
       <View>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate("Home",{word_src: this.props.source})}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate("Home",{word_src: this.props.item.img_url,word: this.props.word})}>
           <Image
             style={styles.image}
             source={{uri: this.props.source}}
