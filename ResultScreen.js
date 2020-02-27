@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Sound from 'react-native-sound'
+import Share from 'react-native-share'
 import {
   StyleSheet,
   View,
@@ -13,7 +14,16 @@ import {
 import MyHeader from "./header.js"
 
 export default class ResultScreen extends Component{
+  constructor() {
+    super()
+
+    this.state={
+      disabled: false
+    }
+  }
+
    play = () => {
+    this.setState({disabled: true})
     console.log(this.props.route.params.path)
     const sound = new Sound(this.props.route.params.path,null, (err) => {
       if (err) {
@@ -21,23 +31,42 @@ export default class ResultScreen extends Component{
         return
       }
       console.log("load")
-      sound.play()
+      sound.play(() => {
+        this.setState({disabled: false})
+      })
     })
   }
+
   render(){
     return(
       <SafeAreaView style={{flex: 1}}>
-        <MyHeader />
-        <View style={styles.container} >
+        <MyHeader button={true} navigation={this.props.navigation} />
+        <View style={styles.img_container} >
           <Image 
             style={styles.result_img}
             source={{uri: this.props.route.params.result_source}}
           />
-          <Text style={styles.translate_text}>{this.props.route.params.translate}</Text>
+          <View style={styles.container}>
+            <Text style={styles.translate_text}>{this.props.route.params.translate}</Text>
 
-          <TouchableOpacity onPress={() => this.play()}>
-            <Text style={styles.playButton} >play!</Text>
-          </TouchableOpacity>
+            <TouchableOpacity disabled={this.state.disabled} onPress={() => this.play()}>
+              <Text style={styles.playButton} >play</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.container}>
+            <TouchableOpacity 
+              onPress={async () => {
+                Share.open({
+                  url: this.props.route.params.result_source,
+                  filename: "topict.jpeg",
+                  message: this.props.route.params.translate
+                })
+              }}
+            >
+              <Text style={styles.playButton} >share</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </SafeAreaView>
     )
@@ -45,7 +74,7 @@ export default class ResultScreen extends Component{
 }
 
 const styles = StyleSheet.create({
-  container: {
+  img_container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -56,12 +85,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   translate_text: {
-    marginTop: 40,
   },
   playButton:{
-    fontSize: 30,
+    fontSize: 25,
     color: "#ffffff",
     backgroundColor: "#6f72ca",
     padding: 5,
+    marginLeft: 10,
   },
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    marginTop: 20
+  }
 })

@@ -6,7 +6,8 @@ import {
   View,
   Text,
   StatusBar,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native';
 
 import {
@@ -21,22 +22,28 @@ export default class MyHeader extends Component {
   render() {
     return(
       <View style={styles.header_main}>
-        <View style={styles.text_wrap}>
-          <Text style={styles.header_text}>topict</Text>
-        </View>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate("Home")}
+          style={styles.go_back_wrap}
+        >
+          <Image 
+            style={styles.go_back}
+            display={this.props.button ? "" : "none"}
+            source={require("./assets/images/go_back_header.png")}
+          />
+        </TouchableOpacity>
+        <Text style={styles.header_text}>topict</Text>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  hearder_main: {
-    flex: 1,
+  header_main: {
     flexDirection: "row",
-  },
-  text_wrap: {
-    alignItems: "center",
     backgroundColor: "#6f72ca",
+    alignItems: "center",
+    justifyContent: "center"
   },
   header_text: {
     fontSize: 40,
@@ -44,5 +51,15 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
     color: "white"
+  },
+  go_back: {
+    height: 35,
+    width: 35
+  },
+  go_back_wrap: {
+    marginTop: "auto",
+    marginBottom: "auto",
+    position: "absolute",
+    left: 15,
   }
 })

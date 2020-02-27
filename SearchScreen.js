@@ -53,11 +53,7 @@ export default class SearchScreen extends Component{
           <TouchableOpacity
             onPress={() => navigation.navigate("Home")}
           >
-            <Text 
-              style={styles.go_back}
-            >
-              go back
-            </Text>
+            <Image source={require("./assets/images/go_back.png")} style={styles.go_back} />
           </TouchableOpacity>
           <TextInput 
             style={styles.form}
@@ -88,11 +84,10 @@ const styles = StyleSheet.create({
     padding: 15
   },
   go_back: {
-    height: 45,
-    width: 45,
+    height: 35,
+    width: 35,
     left: 15,
     top: 15,
-    backgroundColor: "red",
   },
   form: {
     left: 35,

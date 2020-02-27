@@ -30,7 +30,8 @@ export default class MainScreen extends Component{
     this.state={
       verb: "buy",
       js: "",
-      lang: "en"
+      lang: "en",
+      disabled: false
     }
   }
 
@@ -52,16 +53,18 @@ export default class MainScreen extends Component{
         canvas.height = 1000
         canvas.width = 1400
         let ctx = canvas.getContext("2d")
+        ctx.fillStyle = "#FFFFFF"
+        ctx.fillRect(0,0,1400,1000)
         let flag = 0
 
         let verb_img = new Image()
         verb_img.onload = () => {
           let w = 500
           let h = verb_img.height * 500 / verb_img.width
-          ctx.drawImage(verb_img, 10, 50, w, h)
+          ctx.drawImage(verb_img, 50, (1000-h)/2, w, h)
           flag += 1
           if (flag == 2){
-            const result = canvas.toDataURL()
+            const result = canvas.toDataURL("image/jpeg")
             window.ReactNativeWebView.postMessage(result)
           }
         }
@@ -71,10 +74,10 @@ export default class MainScreen extends Component{
         word_img.onload = () => {
           let w = 500
           let h = word_img.height * 500 / word_img.width
-          ctx.drawImage(word_img, 550, 50, w, h)
+          ctx.drawImage(word_img, 590, (1000-h)/2, w, h)
           flag += 1
           if (flag == 2){
-            const result = canvas.toDataURL()
+            const result = canvas.toDataURL("image/jpeg")
             window.ReactNativeWebView.postMessage(result)
           }
         }
@@ -136,11 +139,14 @@ export default class MainScreen extends Component{
             ]}
           />
 
-          <TouchableOpacity onPress={async () => {
-            this.make_img(this.state.verb, this.props.route.params.word_src,WebViewRef)
-            }
-          }>
-            <Text style={styles.editButton} >Edit!</Text>
+          <TouchableOpacity 
+            onPress={async () => {
+              this.setState({disabled: true})
+              this.make_img(this.state.verb, this.props.route.params.word_src,WebViewRef)
+            }}
+            disabled={this.state.disabled}
+          >
+            <Text style={styles.editButton} >Edit</Text>
           </TouchableOpacity>
         </View>
         <View>
@@ -160,13 +166,11 @@ export default class MainScreen extends Component{
               const text = `私は${this.props.route.params.word}${verb_ja}`
               const translated = await translate(token,text,"ja",this.state.lang)
               const res = await speech(token,translated.data[0],this.state.lang)
-              console.log(res)
-              let tmp = Buffer.from(res.data).toString('base64');
-              const speech_src = `data:${res.headers['content-type'].toLowerCase()};base64,${tmp}`
+              const speech_src = Buffer.from(res.data).toString('base64');
               const path = `file://${RNFS.DocumentDirectoryPath}/speech.wav`;
               await RNFS.writeFile(path, speech_src, 'base64')
-              console.log(speech_src)
-              navigation.push("Result",{result_source: data, translate: translated.data[0], path: path})
+              navigation.navigate("Result",{result_source: data, translate: translated.data[0], path: path})
+              this.setState({disabled: false})
             }}
           />
         </View>
@@ -207,6 +211,7 @@ const styles = StyleSheet.create({
   input: {
     marginTop: 40,
     marginBottom: 40,
+    textAlign: "center",
     height: 60,
     width: 180,
     color: "#000000",
@@ -234,9 +239,11 @@ const styles = StyleSheet.create({
   inputIOS: {
     color: "#000000",
     backgroundColor: "#ffffff",
-    marginLeft: 90,
-    marginRight: 90,
+    textAlign: "center",
     marginBottom: 30,
+    marginRight: "auto",
+    marginLeft: "auto",
+    width: 180,
     height: 60,
       
   },
