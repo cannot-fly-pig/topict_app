@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   form_wrap: {
-    flexDirection: "row"
+    flexDirection: "row",
+    alignItems: "center",
   },
   suggest_wrap: {
     padding: 15

@@ -30,7 +30,6 @@ export default class ResultScreen extends Component{
         console.log('failed to load the sound', err)
         return
       }
-      console.log("load")
       sound.play(() => {
         this.setState({disabled: false})
       })
@@ -50,7 +49,7 @@ export default class ResultScreen extends Component{
             <Text style={styles.translate_text}>{this.props.route.params.translate}</Text>
 
             <TouchableOpacity disabled={this.state.disabled} onPress={() => this.play()}>
-              <Text style={styles.playButton} >play</Text>
+              <Image source={require("./assets/images/speek.png")} style={styles.playButton} />
             </TouchableOpacity>
           </View>
 
@@ -59,12 +58,11 @@ export default class ResultScreen extends Component{
               onPress={async () => {
                 Share.open({
                   url: this.props.route.params.result_source,
-                  filename: "topict.jpeg",
                   message: this.props.route.params.translate
                 })
               }}
             >
-              <Text style={styles.playButton} >share</Text>
+              <Text style={styles.shareButton} >share</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -85,12 +83,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   translate_text: {
+    fontSize: 15,
   },
-  playButton:{
+  shareButton:{
     fontSize: 25,
     color: "#ffffff",
     backgroundColor: "#6f72ca",
     padding: 5,
+  },
+  playButton:{
+    width: 25,
+    height: 25,
     marginLeft: 10,
   },
   container: {

@@ -108,7 +108,7 @@ export default class MainScreen extends Component{
         <View style={styles.buttonWrap}>
           <VerbButton id="buy" chosen={this.state.verb} onPressIn={() => this.click_verb("buy")} source={buy_src} />
           <VerbButton id="see" chosen={this.state.verb} onPressIn={() => this.click_verb("see")} source={see_src} />
-          <VerbButton id="get" chosen={this.state.verb} onPressIn={() => this.click_verb("get")} source={get_src} />
+          <VerbButton id="eat" chosen={this.state.verb} onPressIn={() => this.click_verb("eat")} source={get_src} />
           <VerbButton id="go" chosen={this.state.verb} onPressIn={() => this.click_verb("go")} source={go_src} />
         </View>
         <View style={styles.partsWrap}> 
@@ -161,7 +161,7 @@ export default class MainScreen extends Component{
               let verb_ja
               if (this.state.verb == "buy") verb_ja = "が買いたいです"
               else if (this.state.verb == "go") verb_ja = "に行きたいです"
-              else if (this.state.verb == "get") verb_ja = "が欲しいです"
+              else if (this.state.verb == "eat") verb_ja = "が食べたいです"
               else if (this.state.verb == "see") verb_ja = "が見たいです"
               const text = `私は${this.props.route.params.word}${verb_ja}`
               const translated = await translate(token,text,"ja",this.state.lang)
