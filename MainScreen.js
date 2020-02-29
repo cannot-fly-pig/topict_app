@@ -91,24 +91,27 @@ export default class MainScreen extends Component{
     WebViewRef.reload()
   }
 
+
   render() {
+    StatusBar.setBarStyle('dark-content', true)
     const buy_src = require("./assets/images/buy_button.png")
     const see_src = require("./assets/images/see_button.png")
-    const get_src = require("./assets/images/get_button.png")
+    const eat_src = require("./assets/images/eat_button.png")
     const go_src = require("./assets/images/go_button.png")
     let WebViewRef
     const { navigation } = this.props
 
     return (
       <SafeAreaView style={styles.container}>
+        <StatusBar backgroundColor="blue" barStyle="light-content" style={{height: 20}} />
         <MyHeader />
         <View style={styles.textWrap}>
-          <Text style={styles.mainText}>I wanna</Text>
+          <Text style={styles.mainText}>わたしは</Text>
         </View>
         <View style={styles.buttonWrap}>
           <VerbButton id="buy" chosen={this.state.verb} onPressIn={() => this.click_verb("buy")} source={buy_src} />
           <VerbButton id="see" chosen={this.state.verb} onPressIn={() => this.click_verb("see")} source={see_src} />
-          <VerbButton id="eat" chosen={this.state.verb} onPressIn={() => this.click_verb("eat")} source={get_src} />
+          <VerbButton id="eat" chosen={this.state.verb} onPressIn={() => this.click_verb("eat")} source={eat_src} />
           <VerbButton id="go" chosen={this.state.verb} onPressIn={() => this.click_verb("go")} source={go_src} />
         </View>
         <View style={styles.partsWrap}> 
@@ -146,7 +149,7 @@ export default class MainScreen extends Component{
             }}
             disabled={this.state.disabled}
           >
-            <Text style={styles.editButton} >Edit</Text>
+            <Text style={styles.editButton} >作成</Text>
           </TouchableOpacity>
         </View>
         <View>
@@ -186,11 +189,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
   },
   mainText: {
-    fontSize: 50,
-    fontFamily: "FranklinGothic-Heavy",
+    fontSize: 40,
     marginTop: 40,
     marginBottom: 20,
     color: "#474747",
+    fontWeight: "bold",
+    letterSpacing: -3
   },
   buttonWrap: {
     flexDirection: "row",
@@ -222,10 +226,11 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   editButton:{
-    fontSize: 30,
+    fontSize: 20,
     color: "#ffffff",
     backgroundColor: "#6f72ca",
-    padding: 5,
+    padding: 10,
+    fontWeight: "bold",
   },
   chosen: {
     borderColor: "orange",

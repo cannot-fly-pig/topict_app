@@ -19,6 +19,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* topictTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* topictTests.m */; };
 		76B312A9F715B0331DE792A7 /* libPods-topictTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4EC110CA4697C500EC9FEC /* libPods-topictTests.a */; };
 		A4AEBF8120E0E86C03761F59 /* libPods-topict-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A606BF2D0AE7DD1AEF531AA /* libPods-topict-tvOS.a */; };
+		B3357225240A15DC00D54C36 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = B3357224240A15DC00D54C36 /* splash.png */; };
 		C42A47716DD187EB333F53FA /* libPods-topict.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE65D58F7B7AF746A76F8E87 /* libPods-topict.a */; };
 		CC349D33739E4E71A3AB9739 /* FranklinGothicHeavyRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC3E177FF75D40DFA13E620F /* FranklinGothicHeavyRegular.ttf */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,7 @@
 		566606B9CB6BD2E126194DF8 /* Pods-topict-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topict-tvOS.release.xcconfig"; path = "Target Support Files/Pods-topict-tvOS/Pods-topict-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		88EE6BFB8E10DD9E96B4F992 /* Pods-topict.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topict.debug.xcconfig"; path = "Target Support Files/Pods-topict/Pods-topict.debug.xcconfig"; sourceTree = "<group>"; };
 		9E359091AF7A4F23B77F86BA /* Pods-topictTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topictTests.release.xcconfig"; path = "Target Support Files/Pods-topictTests/Pods-topictTests.release.xcconfig"; sourceTree = "<group>"; };
+		B3357224240A15DC00D54C36 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = topict/splash.png; sourceTree = "<group>"; };
 		B76E001E15FBB7523474BBA9 /* Pods-topict.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topict.release.xcconfig"; path = "Target Support Files/Pods-topict/Pods-topict.release.xcconfig"; sourceTree = "<group>"; };
 		C56D7AEF9F6E3D23EB4E6766 /* Pods-topictTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topictTests.debug.xcconfig"; path = "Target Support Files/Pods-topictTests/Pods-topictTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -130,6 +132,7 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				B3357224240A15DC00D54C36 /* splash.png */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -351,6 +354,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3357225240A15DC00D54C36 /* splash.png in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				CC349D33739E4E71A3AB9739 /* FranklinGothicHeavyRegular.ttf in Resources */,

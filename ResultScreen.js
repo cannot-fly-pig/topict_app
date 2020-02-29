@@ -8,7 +8,8 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
+  StatusBar
 } from 'react-native'
 
 import MyHeader from "./header.js"
@@ -37,6 +38,7 @@ export default class ResultScreen extends Component{
   }
 
   render(){
+    StatusBar.setBarStyle('dark-content', true)
     return(
       <SafeAreaView style={{flex: 1}}>
         <MyHeader button={true} navigation={this.props.navigation} />
@@ -62,7 +64,7 @@ export default class ResultScreen extends Component{
                 })
               }}
             >
-              <Text style={styles.shareButton} >share</Text>
+              <Text style={styles.shareButton} >共有</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -86,10 +88,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   shareButton:{
-    fontSize: 25,
+    fontSize: 20,
+    fontWeight: "bold",
     color: "#ffffff",
     backgroundColor: "#6f72ca",
-    padding: 5,
+    padding: 10,
   },
   playButton:{
     width: 25,

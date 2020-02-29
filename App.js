@@ -1,28 +1,8 @@
 import React, {Component} from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
-import axios from "axios"
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Image,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native'
+import SplashScreen from 'react-native-splash-screen'
 
-import {
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen'
-
-import MyHeader from "./header.js"
-import VerbButton from "./verb_button.js"
 import MainScreen from "./MainScreen.js"
 import ResultScreen from "./ResultScreen.js"
 import SearchScreen from "./SearchScreen.js"
@@ -41,6 +21,9 @@ function Main_Result() {
 const Search = createStackNavigator()
 
 export default class App extends Component {
+  componentDidMount() {
+    SplashScreen.hide()
+  }
   render() {
     return (
       <NavigationContainer >
