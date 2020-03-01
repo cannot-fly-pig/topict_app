@@ -27,6 +27,8 @@ export default class SearchScreen extends Component{
   search_word = (text) => {
     let kouho_tmp = irasutoya.filter(function(item,index){
       if (item.name != null && item.name.includes(text)) return true
+      if (item.discription != null && item.discription.includes(text)) return true
+      if (item.name == text) return true
     })
     let tmp = []
     let kouho = []
@@ -37,7 +39,6 @@ export default class SearchScreen extends Component{
         tmp = []
       }
     }
-    console.log("state")
     console.log(this.state.kouho)
     return kouho
   }
@@ -58,12 +59,15 @@ export default class SearchScreen extends Component{
           <TextInput 
             style={styles.form}
             ref={e => input = e}
-            onChangeText={(text) => this.setState({kouho: this.search_word(text),word: text})}
+            onChangeText={(text) => {
+              if (text) this.setState({kouho: this.search_word(text),word: text})
+              else this.setState({kouho: [],word: text})
+            }}
           >
           </TextInput>
         </View>
         <ScrollView style={styles.suggest_wrap}>
-          {(this.state.kouho.slice(0,10)).map((item) => {
+          {(this.state.kouho.slice(0,20)).map((item) => {
             return <SuggestImageRow sources={item} word={this.state.word} navigation={navigation}/>
           })}
         </ScrollView>
@@ -80,9 +84,10 @@ const styles = StyleSheet.create({
   form_wrap: {
     flexDirection: "row",
     alignItems: "center",
+    zIndex: 10
   },
   suggest_wrap: {
-    padding: 15
+    padding: 15,
   },
   go_back: {
     height: 35,

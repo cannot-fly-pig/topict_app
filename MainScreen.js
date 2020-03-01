@@ -13,7 +13,6 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
-  Picker
 } from 'react-native'
 
 import MyHeader from "./header.js"
@@ -103,7 +102,6 @@ export default class MainScreen extends Component{
 
     return (
       <SafeAreaView style={styles.container}>
-        <StatusBar backgroundColor="blue" barStyle="light-content" style={{height: 20}} />
         <MyHeader />
         <View style={styles.textWrap}>
           <Text style={styles.mainText}>わたしは</Text>
@@ -144,6 +142,10 @@ export default class MainScreen extends Component{
 
           <TouchableOpacity 
             onPress={async () => {
+              if(!this.props.route.params) {
+                alert("画像を選択してください")
+                return
+              }
               this.setState({disabled: true})
               this.make_img(this.state.verb, this.props.route.params.word_src,WebViewRef)
             }}
